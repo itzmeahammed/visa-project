@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quotation — Meridian &amp; Hart Global Mobility</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#0a0a0b; --soft:#71717a; --soft-2:#a1a1aa; --line:#eaeaea; --panel:#f5f7f5; --white:#fff;
+  --dark:#0a0a0b; --on-dark:#a8a8b0;
+  --green:#16c46a; --green-2:#2ee082; --green-lite:#e9fff1; --green-deep:#0e9e54;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;background:radial-gradient(1100px 520px at 100% -8%,#effff5,transparent),radial-gradient(900px 460px at -5% 4%,#f3f9f4,transparent),#fff;padding:0}
+h1,h2,h3{font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.mono{font-family:'JetBrains Mono',monospace}
+.aed{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sheet{max-width:1340px;margin:0 auto;min-height:100vh;overflow:hidden}
+.pad{padding:clamp(1.6rem,5vw,4.5rem)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+
+/* keyframes */
+@keyframes floaty{0%,100%{transform:translateY(0) rotateX(0) rotateY(0)}50%{transform:translateY(-12px) rotateX(3deg) rotateY(-3deg)}}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes shadowpulse{0%,100%{transform:scaleX(1);opacity:.18}50%{transform:scaleX(.82);opacity:.1}}
+@keyframes growbar{from{transform:scaleY(.05)}to{transform:scaleY(1)}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(22,196,106,.5)}100%{box-shadow:0 0 0 9px rgba(22,196,106,0)}}
+@keyframes sheen{to{background-position:200% 0}}
+
+/* top bar */
+.bar{display:flex;justify-content:space-between;align-items:center;padding:1.4rem clamp(1.6rem,5vw,3.4rem);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+.brand .m{width:34px;height:34px;border-radius:10px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.1rem;position:relative}
+.brand .m::after{content:"";position:absolute;right:-3px;bottom:-3px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid #fff}
+.brand small{display:block;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600}
+.pill-dark{background:var(--ink);color:#fff;border-radius:100px;padding:.5rem 1rem;font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;display:inline-flex;align-items:center;gap:.5rem}
+.pill-dark::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green-2);animation:pulse 1.8s infinite}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:center;padding-top:.5rem;perspective:1200px}
+.hero h1{font-size:clamp(2.1rem,5vw,3.4rem)}
+.hero h1 .hl{display:inline-block;background:linear-gradient(135deg,var(--green-2),var(--green));color:#053018;padding:.02em .28em .14em;border-radius:14px;line-height:1;white-space:nowrap;box-shadow:0 12px 26px -10px rgba(22,196,106,.75);transform:rotate(-1.4deg)}
+.hero p{color:var(--soft);font-size:1rem;margin:1rem 0 1.4rem;max-width:42ch}
+.hmeta{display:flex;gap:1.6rem;flex-wrap:wrap}
+.hmeta .k{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.hmeta .v{font-weight:700;font-size:.9rem;margin-top:.1rem}
+/* hero mini card (3D float) */
+.minicard{background:var(--ink);border-radius:22px;padding:1.4rem;color:#fff;position:relative;overflow:hidden;animation:floaty2 6s ease-in-out infinite;box-shadow:0 40px 60px -30px rgba(0,0,0,.5)}
+.minicard::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(22,196,106,.45),transparent 70%);top:-70px;right:-60px}
+.minicard .lab{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green-2);position:relative}
+.minicard .big{font-size:2.4rem;font-weight:800;letter-spacing:-.03em;margin:.3rem 0 .1rem;position:relative}
+.minicard .sub{font-size:.72rem;color:var(--on-dark);position:relative}
+.minicard .ln{display:flex;justify-content:space-between;font-size:.74rem;padding:.5rem 0;border-top:1px solid rgba(255,255,255,.12);position:relative}
+.minicard .ln:nth-child(4){border-top:none;margin-top:.6rem}
+.minicard .inc{display:flex;gap:.7rem;align-items:center;padding:.6rem 0;border-top:1px solid rgba(255,255,255,.12);position:relative}
+.minicard .inc:first-of-type{border-top:none}
+.minicard .inc .ico{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:1.1rem}
+.minicard .inc b{font-size:.92rem;display:block}
+.minicard .inc small{font-size:.7rem;color:var(--on-dark)}
+.minicard .hint{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--green-2);margin-top:.9rem;position:relative}
+/* selectable cards */
+.plan,.pc{cursor:pointer}
+.plan.sel,.pc.sel{box-shadow:0 0 0 2px var(--green),0 30px 60px -40px rgba(22,196,106,.45)!important;border-color:var(--green)!important}
+.plan.sel::after,.pc.sel::after{content:"✓ Selected";position:absolute;top:0;left:0;font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.06em;background:var(--green);color:#053018;padding:.22rem .5rem;border-bottom-right-radius:11px;font-weight:800;z-index:4}
+
+/* sections */
+.sec{margin-top:3rem}
+.sec-h{display:flex;align-items:baseline;gap:.8rem;margin-bottom:1.3rem}
+.sec-h .nx{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--green-deep)}
+.sec-h h2{font-size:1.7rem}
+.sec-h .tag{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);padding:.3rem .6rem;border-radius:100px}
+
+/* plan cards */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:1rem;perspective:1200px}
+.plan{border:1px solid var(--line);border-radius:22px;padding:1.6rem;background:#fff;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.plan:hover{transform:translateY(-6px) rotateX(3deg);box-shadow:0 36px 60px -38px rgba(0,0,0,.4)}
+.plan.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.plan.dark::before{content:"";position:absolute}
+.plan{position:relative;overflow:hidden}
+.plan.dark{background:linear-gradient(160deg,#0a0a0b,#101512)}
+.plan.dark .glow{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(22,196,106,.35),transparent 70%);bottom:-90px;left:-50px}
+.plan .pn{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.plan.dark .pn{color:var(--green-2)}
+.plan .top{display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+.plan .rec{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;background:var(--green);color:#06351d;padding:.3rem .6rem;border-radius:100px;font-weight:800;animation:pop .5s .2s both}
+.plan h3{font-size:1.4rem;margin:.25rem 0 .6rem;position:relative}
+.plan .price{font-size:2.6rem;font-weight:800;letter-spacing:-.03em;line-height:1;position:relative}
+.plan .price small{font-size:.85rem;font-weight:600;color:var(--soft)}
+.plan.dark .price small{color:var(--on-dark)}
+.plan .blurb{font-size:.82rem;color:var(--soft);margin:.5rem 0 1.1rem;min-height:2.4em;position:relative}
+.plan.dark .blurb{color:var(--on-dark)}
+.feat{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-top:auto;position:relative}
+.feat li{display:flex;gap:.6rem;align-items:flex-start;font-size:.85rem}
+.feat li .c{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:.6rem;font-weight:800;margin-top:.1rem;background:var(--green);color:#fff}
+.feat li.off{color:var(--soft-2)}
+.feat li.off .c{background:var(--line);color:var(--soft-2)}
+.plan.dark .feat li.off{color:#6a6a72}
+.plan.dark .feat li.off .c{background:#26262c;color:#6a6a72}
+.minote{font-size:.72rem;color:var(--soft);margin-top:.9rem;display:flex;gap:.4rem;position:relative}
+.plan.dark .minote{color:var(--on-dark)}
+.minote b{color:inherit;font-weight:700}
+
+/* PC options (3D float) */
+.pcs{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;perspective:1500px}
+.pc{border:1px solid var(--line);border-radius:22px;background:#fff;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.pc:hover{transform:translateY(-6px) rotateX(3deg);box-shadow:0 36px 60px -38px rgba(0,0,0,.4)}
+.pc.dark{background:linear-gradient(160deg,#0a0a0b,#101512);color:#fff;border-color:var(--ink)}
+.pc .pic{padding:1rem .6rem .2rem;display:grid;place-items:center;background:var(--panel);position:relative}
+.pc.dark .pic{background:#121512}
+.pc .pic svg{width:100%;max-width:116px;height:auto;position:relative;z-index:1;transition:transform .3s}
+.pc:hover .pic svg{transform:translateY(-5px)}
+.pc .pic .shadow{position:absolute;bottom:9px;left:50%;width:72px;height:10px;border-radius:50%;background:#000;transform:translateX(-50%);filter:blur(6px);opacity:.16}
+.pc .body{padding:.85rem .95rem 1.1rem;display:flex;flex-direction:column;flex:1}
+.pc .top{display:flex;justify-content:space-between;align-items:center;gap:.3rem}
+.pc .tier{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.pc.dark .tier{color:var(--green-2)}
+.pc .rec{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.04em;text-transform:uppercase;background:var(--green);color:#06351d;padding:.2rem .4rem;border-radius:100px;font-weight:800}
+.pc h3{font-size:1rem;margin:.15rem 0 .5rem;line-height:1.12}
+.pc .ps{list-style:none;display:flex;flex-direction:column;gap:.28rem;font-size:.71rem;color:var(--soft);margin-bottom:.8rem;line-height:1.3}
+.pc.dark .ps{color:var(--on-dark)}
+.pc .ps b{color:var(--ink);font-weight:700}
+.pc.dark .ps b{color:#fff}
+.pc .pp{margin-top:auto}
+.pc .pp .v{font-size:1.45rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+.pc .pp .u{font-size:.64rem;color:var(--soft)}
+.pc.dark .pp .u{color:var(--on-dark)}
+
+/* hardware total strip */
+.hwtot{display:grid;grid-template-columns:1.3fr 1fr;gap:1rem;margin-top:1rem}
+.hwbox{border:1px solid var(--line);border-radius:20px;padding:1.3rem 1.4rem;background:#fff}
+.hwbox .h{display:flex;align-items:center;gap:.5rem;font-weight:700;margin-bottom:.7rem}
+.hwbox .chips{display:flex;gap:.45rem;flex-wrap:wrap}
+.hwbox .chips span{font-size:.74rem;background:var(--green-lite);border-radius:100px;padding:.32rem .7rem;color:var(--green-deep);font-weight:600}
+.hwbox .nm{font-size:.72rem;color:var(--soft);margin-top:.8rem}
+.hwsum{border-radius:20px;padding:1.3rem 1.4rem;background:var(--panel)}
+.hwsum .li{display:flex;justify-content:space-between;font-size:.84rem;padding:.45rem 0;border-top:1px solid var(--line)}
+.hwsum .li:first-child{border-top:none}
+.hwsum .li b{font-weight:700}
+.hwsum .tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:.6rem;padding-top:.7rem;border-top:2px solid var(--green)}
+.hwsum .tot .l{font-weight:700}
+.hwsum .tot .v{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;color:var(--green-deep)}
+
+/* summary band */
+.summary{background:var(--ink);color:#fff;border-radius:26px;padding:clamp(1.6rem,4vw,2.4rem);margin-top:3rem;position:relative;overflow:hidden}
+.summary::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(22,196,106,.3),transparent 70%);bottom:-180px;right:-90px}
+.summary h2{font-size:1.6rem;margin-bottom:1.2rem;position:relative}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-top:1px solid rgba(255,255,255,.13);font-size:.92rem;position:relative}
+.srow:first-of-type{border-top:none}
+.srow .l span{display:block;font-size:.72rem;color:var(--on-dark)}
+.srow .v{font-family:'JetBrains Mono',monospace;font-weight:600}
+.grand{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1.2rem;border-top:2px solid rgba(255,255,255,.28);position:relative;flex-wrap:wrap;gap:.5rem}
+.grand .l .t{font-weight:700;font-size:1rem}
+.grand .l .s{font-size:.7rem;color:var(--on-dark)}
+.grand .big{font-size:2.8rem;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--green-2)}
+.chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.12);padding:.3rem .65rem;border-radius:100px;margin-top:.9rem;position:relative}
+
+.foot-note{font-size:.74rem;color:var(--soft);margin-top:1.6rem;display:flex;flex-direction:column;gap:.4rem}
+.foot-note b{color:var(--ink);font-weight:700}
+
+.print-btn{position:fixed;bottom:1.4rem;right:1.4rem;background:linear-gradient(135deg,var(--green),var(--green-deep));color:#fff;border:none;padding:.85rem 1.5rem;border-radius:100px;font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 16px 34px -10px rgba(14,158,84,.6)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:1080px){.pcs{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.hero,.hwtot{grid-template-columns:1fr}.plans{grid-template-columns:1fr}.pcs{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.pcs{grid-template-columns:1fr}}
+@media print{
+  body{background:#fff;padding:0}.sheet{box-shadow:none;border-radius:0;max-width:100%}.print-btn{display:none}
+  *{animation:none!important}.reveal{opacity:1!important;transform:none!important}
+  .plan.dark,.pc.dark,.summary,.minicard,.brand .m,.hero h1 .hl,.feat li .c,.pill-dark,.plan .rec,.pc .rec{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Print / Save PDF ↓</button>
+
+<div class="sheet">
+
+  <div class="bar">
+    <div class="brand"><span class="m">M</span><div>Meridian &amp; Hart<small>Digital Systems · Dubai</small></div></div>
+    <span class="pill-dark">QUOTATION</span>
+  </div>
+
+  <div class="pad">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Prepared for · Global Visa Consultancy</span>
+        <h1>Your complete <span class="hl">setup</span>,<br>one clear quote.</h1>
+        <p>Website, CRM and a 3-PC office setup — transparent plans and prices, ready to go live.</p>
+        <div class="hmeta">
+          <div><div class="k">Issued</div><div class="v">27 Jun 2026</div></div>
+          <div><div class="k">Valid until</div><div class="v">27 Jul 2026</div></div>
+          <div><div class="k">Currency</div><div class="v">AED</div></div>
+        </div>
+      </div>
+      <div class="minicard">
+        <div class="lab">● What's included</div>
+        <div class="inc"><span class="ico">🌐</span><div><b>Website</b><small>Your online presence</small></div></div>
+        <div class="inc"><span class="ico">📊</span><div><b>CRM</b><small>Leads, deals &amp; reports</small></div></div>
+        <div class="inc"><span class="ico">🖥️</span><div><b>3 × Office PC</b><small>Supplied &amp; set up</small></div></div>
+        <div class="hint">Tap a plan below to build your quote ↓</div>
+      </div>
+    </div>
+
+    <!-- WEBSITE -->
+    <div class="sec">
+      <div class="sec-h"><span class="nx">01</span><h2>Website</h2><span class="tag">Choose one</span></div>
+      <div class="plans">
+        <div class="plan">
+          <div class="top"><span class="pn">Plan A · Starter</span></div>
+          <h3>Static Website</h3>
+          <div class="price">1,500 <small>AED</small></div>
+          <p class="blurb">A clean, professional presence — fast to launch.</p>
+          <ul class="feat">
+            <li><span class="c">✓</span>Up to 5 designed pages</li>
+            <li><span class="c">✓</span>Mobile responsive design</li>
+            <li><span class="c">✓</span>Contact &amp; enquiry form</li>
+            <li><span class="c">✓</span>Basic SEO &amp; WhatsApp button</li>
+            <li class="off"><span class="c">×</span>Dynamic / editable content</li>
+          </ul>
+        </div>
+        <div class="plan dark">
+          <span class="glow"></span>
+          <div class="top"><span class="pn">Plan B · Dynamic</span><span class="rec">Recommended</span></div>
+          <h3>Dynamic Website</h3>
+          <div class="price">2,500 <small>AED</small></div>
+          <p class="blurb">Self-manageable site with content that updates live.</p>
+          <ul class="feat">
+            <li><span class="c">✓</span>Everything in Starter</li>
+            <li><span class="c">✓</span><b>Dynamic content</b> via CMS</li>
+            <li><span class="c">✓</span>Blog / news &amp; visa-program listings</li>
+            <li><span class="c">✓</span>Lead form → CRM connection</li>
+            <li><span class="c">✓</span>Admin dashboard &amp; training</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRM -->
+    <div class="sec">
+      <div class="sec-h"><span class="nx">02</span><h2>CRM</h2><span class="tag">Choose one</span></div>
+      <div class="plans">
+        <div class="plan">
+          <div class="top"><span class="pn">Plan A · Basic</span></div>
+          <h3>Core CRM</h3>
+          <div class="price">5,000 <small>AED</small></div>
+          <p class="blurb">Run your whole sales pipeline in one place.</p>
+          <ul class="feat">
+            <li><span class="c">✓</span>Leads management</li>
+            <li><span class="c">✓</span>Deals / pipeline section</li>
+            <li><span class="c">✓</span>Website &amp; social media integration</li>
+            <li><span class="c">✓</span>Tasks &amp; projects</li>
+            <li><span class="c">✓</span>Manage users · roles &amp; permissions</li>
+            <li><span class="c">✓</span>Notifications &amp; activity monitor</li>
+            <li><span class="c">✓</span>Reports &amp; sales reports</li>
+            <li class="off"><span class="c">×</span>WhatsApp integration</li>
+          </ul>
+        </div>
+        <div class="plan dark">
+          <span class="glow"></span>
+          <div class="top"><span class="pn">Plan B · Pro</span><span class="rec">Recommended</span></div>
+          <h3>CRM + WhatsApp</h3>
+          <div class="price">7,000 <small>AED</small></div>
+          <p class="blurb">Everything in Basic, plus WhatsApp messaging built in.</p>
+          <ul class="feat">
+            <li><span class="c">✓</span>Everything in Core CRM</li>
+            <li><span class="c">✓</span>Leads, deals, tasks, projects &amp; reports</li>
+            <li><span class="c">✓</span>Roles &amp; permissions, notifications, activity monitor</li>
+            <li><span class="c">✓</span><b>WhatsApp integration</b> in CRM</li>
+          </ul>
+          <div class="minote">⚠️<span><b>Note:</b> WhatsApp uses a third-party API — that subscription is paid directly by the client.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPUTERS -->
+    <div class="sec">
+      <div class="sec-h"><span class="nx">03</span><h2>Computers — Choose your PC</h2><span class="tag">5 options · 3 units</span></div>
+      <div class="pcs">
+
+        <div class="pc">
+          <div class="pic">
+            <div class="shadow"></div>
+            <svg viewBox="0 0 160 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="24" y="8" width="112" height="80" rx="8" fill="#111114"/><rect x="30" y="14" width="100" height="60" rx="3" fill="url(#g1)"/><circle cx="80" cy="11.4" r="1.4" fill="#16c46a"/><rect x="38" y="22" width="32" height="5" rx="2.5" fill="#9fb3a6" opacity=".5"/><rect x="38" y="33" width="84" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="38" y="42" width="58" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="74" y="88" width="12" height="11" fill="#1c1c22"/><rect x="52" y="99" width="56" height="6" rx="3" fill="#1c1c22"/>
+              <defs><linearGradient id="g1" x1="30" y1="14" x2="130" y2="74" gradientUnits="userSpaceOnUse"><stop stop-color="#f4f6f4"/><stop offset="1" stop-color="#dbe8e0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="top"><span class="tier">1 · Essential</span></div>
+            <h3>HP 24-cb1022nh</h3>
+            <ul class="ps"><li>⚙️ <b>Core i5-1235U</b></li><li>🧠 <b>8GB</b> · 💾 <b>256GB</b> SSD</li><li>🖵 <b>23.8"</b> FHD AiO</li><li>⌨️ Wired KB+mouse · FreeDOS</li></ul>
+            <div class="pp"><div class="v aed">AED 2,059</div><div class="u">per PC · supply only</div></div>
+          </div>
+        </div>
+
+        <div class="pc">
+          <div class="pic">
+            <div class="shadow"></div>
+            <svg viewBox="0 0 160 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="8" width="120" height="80" rx="8" fill="#111114"/><rect x="26" y="14" width="108" height="60" rx="3" fill="url(#g4)"/><circle cx="80" cy="11.4" r="1.4" fill="#16c46a"/><rect x="34" y="22" width="34" height="5" rx="2.5" fill="#9fb3a6" opacity=".5"/><rect x="34" y="33" width="92" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="34" y="42" width="64" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="74" y="88" width="12" height="11" fill="#1c1c22"/><rect x="50" y="99" width="60" height="6" rx="3" fill="#1c1c22"/>
+              <defs><linearGradient id="g4" x1="26" y1="14" x2="134" y2="74" gradientUnits="userSpaceOnUse"><stop stop-color="#f4f6f4"/><stop offset="1" stop-color="#dbe8e0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="top"><span class="tier">2 · Value 27"</span></div>
+            <h3>Lenovo ThinkCentre Neo 50a 27</h3>
+            <ul class="ps"><li>⚙️ <b>Core 7 240H</b></li><li>🧠 <b>16GB</b> · 💾 <b>512GB</b> SSD</li><li>🖵 <b>27"</b> FHD IPS AiO</li><li>⌨️ Wired KB+mouse · <b>Win 11</b></li></ul>
+            <div class="pp"><div class="v aed">AED 2,784</div><div class="u">per PC · supply only</div></div>
+          </div>
+        </div>
+
+        <div class="pc dark">
+          <div class="pic">
+            <div class="shadow"></div>
+            <svg viewBox="0 0 160 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="24" y="8" width="112" height="80" rx="8" fill="#000"/><rect x="30" y="14" width="100" height="60" rx="3" fill="url(#g2)"/><circle cx="80" cy="11.4" r="1.4" fill="#2ee082"/><rect x="38" y="22" width="32" height="5" rx="2.5" fill="#7bbf95"/><rect x="38" y="33" width="84" height="4" rx="2" fill="#9fcdb0"/><rect x="38" y="42" width="58" height="4" rx="2" fill="#9fcdb0"/><rect x="74" y="88" width="12" height="11" fill="#26262c"/><rect x="52" y="99" width="56" height="6" rx="3" fill="#26262c"/>
+              <defs><linearGradient id="g2" x1="30" y1="14" x2="130" y2="74" gradientUnits="userSpaceOnUse"><stop stop-color="#eafff2"/><stop offset="1" stop-color="#c8ecd6"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="top"><span class="tier">3 · Business</span><span class="rec">Pick</span></div>
+            <h3>Lenovo IdeaCentre 24IRH9</h3>
+            <ul class="ps"><li>⚙️ <b>Core i5-13420H</b></li><li>🧠 <b>8GB</b> · 💾 <b>512GB</b> SSD</li><li>🖵 <b>23.8"</b> FHD 100Hz AiO</li><li>🖱️ Wireless KB+mouse · <b>Win 11</b></li></ul>
+            <div class="pp"><div class="v aed">AED 2,999</div><div class="u">per PC · supply only</div></div>
+          </div>
+        </div>
+
+        <div class="pc">
+          <div class="pic">
+            <div class="shadow"></div>
+            <svg viewBox="0 0 160 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="24" y="8" width="112" height="80" rx="8" fill="#111114"/><rect x="30" y="14" width="100" height="60" rx="3" fill="url(#g3)"/><circle cx="80" cy="11.4" r="1.4" fill="#16c46a"/><rect x="38" y="22" width="32" height="5" rx="2.5" fill="#9fb3a6" opacity=".5"/><rect x="38" y="33" width="84" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="38" y="42" width="58" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="74" y="88" width="12" height="11" fill="#1c1c22"/><rect x="52" y="99" width="56" height="6" rx="3" fill="#1c1c22"/>
+              <defs><linearGradient id="g3" x1="30" y1="14" x2="130" y2="74" gradientUnits="userSpaceOnUse"><stop stop-color="#f4f6f4"/><stop offset="1" stop-color="#dbe8e0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="top"><span class="tier">4 · Pro Storage</span></div>
+            <h3>HP All-in-One 24</h3>
+            <ul class="ps"><li>⚙️ <b>Core i5-1335U</b></li><li>🧠 <b>16GB</b> · 💾 <b>1TB</b> SSD</li><li>🖵 <b>23.8"</b> FHD AiO</li><li>⌨️ Wired KB+mouse · <b>Win 11</b></li></ul>
+            <div class="pp"><div class="v aed">AED 3,190</div><div class="u">per PC · supply only</div></div>
+          </div>
+        </div>
+
+        <div class="pc">
+          <div class="pic">
+            <div class="shadow"></div>
+            <svg viewBox="0 0 160 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="8" width="120" height="80" rx="8" fill="#111114"/><rect x="26" y="14" width="108" height="60" rx="3" fill="url(#g5)"/><circle cx="80" cy="11.4" r="1.4" fill="#2ee082"/><rect x="34" y="22" width="34" height="5" rx="2.5" fill="#9fb3a6" opacity=".5"/><rect x="34" y="33" width="92" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="34" y="42" width="64" height="4" rx="2" fill="#c2d2c8" opacity=".6"/><rect x="74" y="88" width="12" height="11" fill="#1c1c22"/><rect x="50" y="99" width="60" height="6" rx="3" fill="#1c1c22"/>
+              <defs><linearGradient id="g5" x1="26" y1="14" x2="134" y2="74" gradientUnits="userSpaceOnUse"><stop stop-color="#f4f6f4"/><stop offset="1" stop-color="#dbe8e0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="top"><span class="tier">5 · Premium</span></div>
+            <h3>HP EliteOne 870 G9</h3>
+            <ul class="ps"><li>⚙️ <b>Core i7-14700</b></li><li>🧠 <b>16GB</b> · 💾 <b>512GB</b> SSD</li><li>🖵 <b>27"</b> QHD AiO</li><li>⌨️ Wired KB+mouse · <b>Win 11 Pro</b></li></ul>
+            <div class="pp"><div class="v aed">AED 5,000</div><div class="u">per PC · supply only</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hwtot">
+        <div class="hwbox">
+          <div class="h">🛠️ Setup &amp; configuration</div>
+          <div class="chips"><span>OS &amp; updates</span><span>Software install</span><span>CRM + website access</span><span>On-site placement</span></div>
+          <div class="nm"><b>Setup &amp; configuration: AED 300–500 per PC</b> (varies by software &amp; onboarding) — applies to every option. This quote uses AED 300/PC. Hardware prices are current UAE retail listings (Amazon.ae / Sharaf DG / Microless / Carrefour); all-in-one units, final model confirmed at order.</div>
+        </div>
+        <div class="hwsum">
+          <div class="li"><span id="hwUnitLabel">Lenovo IdeaCentre × 3</span><b class="aed" id="hwUnit">8,997</b></div>
+          <div class="li"><span>Setup · 300–500 / PC × 3</span><b class="aed">900</b></div>
+          <div class="tot"><span class="l">3-PC total</span><span class="v aed" id="hwTotal">AED 9,897</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+      <h2>Package summary</h2>
+      <div class="srow"><div class="l">Website <span id="sumWebLabel">Dynamic Website</span></div><div class="v aed" id="sumWeb">AED 2,500</div></div>
+      <div class="srow"><div class="l">CRM <span id="sumCrmLabel">CRM + WhatsApp</span></div><div class="v aed" id="sumCrm">AED 7,000</div></div>
+      <div class="srow"><div class="l">Computers <span id="sumCompLabel">3 × Lenovo IdeaCentre + setup</span></div><div class="v aed" id="sumComp">AED 9,897</div></div>
+      <div class="grand">
+        <div class="l"><div class="t">Your total</div><div class="s">one-time · excl. 5% VAT &amp; 3rd-party WhatsApp API</div></div>
+        <div class="big aed" id="sumTotal">AED 19,397</div>
+      </div>
+      <span class="chip" id="sumHint">↑ Tap any Website, CRM or PC card above — your total updates live.</span>
+    </div>
+
+    <div class="foot-note">
+      <span><b>Validity —</b> Quotation valid for 30 days from issue date (27 June 2026).</span>
+      <span><b>Excludes —</b> 5% UAE VAT, domain &amp; hosting, and the third-party WhatsApp API subscription (paid by client).</span>
+      <span><b>Choose —</b> One Website plan + one CRM plan; hardware fixed at 3 PCs. Totals update accordingly.</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});
+document.querySelectorAll('.sec,.hero').forEach(el=>{el.classList.add('reveal');io.observe(el)});
+
+// ---- interactive quote builder ----
+const num=t=>+String(t).replace(/[^0-9]/g,'')||0;
+const fmt=n=>'AED '+n.toLocaleString();
+const plans=document.querySelectorAll('.plans');
+const webCards=[...plans[0].querySelectorAll('.plan')];
+const crmCards=[...plans[1].querySelectorAll('.plan')];
+const pcCards=[...document.querySelectorAll('.pcs .pc')];
+const S={web:{price:0,name:''},crm:{price:0,name:''},pc:{price:0,name:''}};
+
+function pick(c,key,sel){S[key].price=num(c.querySelector(sel).textContent);S[key].name=c.querySelector('h3').textContent.trim();}
+function bind(cards,key,sel){
+  let def=cards.findIndex(c=>c.classList.contains('dark')); if(def<0)def=0;
+  cards.forEach(c=>c.addEventListener('click',()=>{cards.forEach(x=>x.classList.remove('sel'));c.classList.add('sel');pick(c,key,sel);render()}));
+  cards[def].classList.add('sel'); pick(cards[def],key,sel);
+}
+bind(webCards,'web','.price');
+bind(crmCards,'crm','.price');
+bind(pcCards,'pc','.pp .v');
+
+function render(){
+  const web=S.web.price, crm=S.crm.price, unit3=S.pc.price*3, comp=unit3+900, total=web+crm+comp;
+  sumWeb.textContent=fmt(web); sumWebLabel.textContent=S.web.name;
+  sumCrm.textContent=fmt(crm); sumCrmLabel.textContent=S.crm.name;
+  sumComp.textContent=fmt(comp); sumCompLabel.textContent='3 × '+S.pc.name+' + setup';
+  sumTotal.textContent=fmt(total);
+  hwUnit.textContent=unit3.toLocaleString(); hwUnitLabel.textContent=S.pc.name+' × 3'; hwTotal.textContent=fmt(comp);
+}
+render();
+</script>
+</body>
+</html>

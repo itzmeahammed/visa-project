@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meridian &amp; Hart — Global Mobility</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#0a0a0b; --soft:#73767f; --line:#ebebe6; --line-2:#dcdcd5; --panel:#f5f7f5; --white:#fff;
+  --green:#16c46a; --green-2:#2ee082; --green-lite:#e9fff1; --green-deep:#0e9e54; --on-dark:#a8a8b0;
+  --pad:clamp(1.4rem,6vw,8rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:radial-gradient(1100px 520px at 100% -8%,#effff5,transparent),#fff;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.mono{font-family:'JetBrains Mono',monospace}
+.wrap{max-width:1180px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);display:inline-flex;align-items:center;gap:.6rem}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--green)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:600;padding:.78rem 1.5rem;border-radius:100px;border:1px solid transparent;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer}
+.btn-green{background:linear-gradient(135deg,var(--green),var(--green-deep));color:#fff}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(14,158,84,.6)}
+.btn-ghost{border-color:var(--line-2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
+
+@keyframes floaty{0%,100%{transform:translateY(0) rotateX(0) rotateY(0)}50%{transform:translateY(-12px) rotateX(3deg) rotateY(-3deg)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,196,106,.5)}100%{box-shadow:0 0 0 9px rgba(22,196,106,0)}}
+
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.on{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:.7rem;font-weight:700}
+.brand .m{width:34px;height:34px;border-radius:10px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.15rem;position:relative}
+.brand .m::after{content:"";position:absolute;right:-3px;bottom:-3px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid #fff}
+.brand small{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);font-weight:600}
+
+.hero{padding-top:150px;padding-bottom:80px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4.5rem);align-items:center;perspective:1200px}
+.hero h1{font-size:clamp(3rem,6.5vw,5.6rem);margin:1.6rem 0 1.3rem}
+.hero h1 .hl{display:inline-block;background:linear-gradient(135deg,var(--green-2),var(--green));color:#053018;padding:.02em .26em .12em;border-radius:14px;line-height:1;white-space:nowrap;box-shadow:0 12px 26px -10px rgba(22,196,106,.75);transform:rotate(-1.4deg)}
+.hero p{font-size:1.1rem;color:var(--soft);max-width:34ch;margin-bottom:2.2rem}
+.hero .cta{display:flex;gap:.8rem;flex-wrap:wrap}
+
+.pass{background:#0a0a0b;border-radius:22px;color:#fff;overflow:hidden;position:relative;animation:floaty2 6s ease-in-out infinite;box-shadow:0 44px 70px -34px rgba(0,0,0,.55)}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.pass::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(22,196,106,.4),transparent 70%);top:-70px;right:-50px}
+.pass .h{display:flex;justify-content:space-between;padding:1.1rem 1.4rem;border-bottom:1px dashed #2a2a31;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-dark);position:relative}
+.pass .h b{color:#fff}
+.route{padding:1.6rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:relative}
+.node{text-align:center}.node .c{font-size:2rem;font-weight:800}.node .t{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark);margin-top:.2rem}
+.arc{flex:1;height:54px}.arc svg{width:100%;height:100%;overflow:visible}
+.rp{stroke:var(--green-2);stroke-width:1.8;fill:none;stroke-dasharray:4 4;stroke-dashoffset:240;animation:draw 2.4s ease forwards .4s}
+.rows{padding:0 1.4rem 1.2rem;position:relative}
+.rl{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark);margin-bottom:.6rem}
+.row{display:flex;align-items:center;gap:.7rem;padding:.6rem 0;border-top:1px solid #1c1c22;font-size:.86rem}
+.row .d{flex:1;font-weight:600}
+.row .s{font-family:'JetBrains Mono',monospace;font-size:.56rem;text-transform:uppercase;padding:.2rem .55rem;border-radius:100px}
+.ok{background:rgba(22,196,106,.2);color:#2ee082}.rv{background:#1c1c22;color:#a8a8b0}.fi{background:#2a230f;color:#f5c451}
+.pf{background:#000;padding:.85rem 1.4rem;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--on-dark);position:relative}
+.bc{display:flex;gap:2px;align-items:flex-end;height:20px}.bc i{width:2px;background:#fff;opacity:.8}
+
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
+.stat{padding:2.2rem 1rem;text-align:center;border-right:1px solid var(--line)}.stat:last-child{border-right:none}
+.stat .n{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.03em;line-height:1}
+.stat .l{font-size:.8rem;color:var(--soft);margin-top:.4rem}
+
+section{padding-top:clamp(4.5rem,9vw,7rem);padding-bottom:clamp(4.5rem,9vw,7rem)}
+.head{margin-bottom:3rem}
+.head h2{font-size:clamp(2.2rem,4.5vw,3.4rem);margin-top:1rem}
+.svc{display:grid;grid-template-columns:auto 1fr auto;gap:1.4rem;align-items:center;padding:1.5rem .3rem;border-top:1px solid var(--line);transition:padding-left .3s,background .3s;cursor:default}
+.svc:last-child{border-bottom:1px solid var(--line)}
+.svc:hover{padding-left:1.2rem;background:var(--green-lite)}
+.svc .ic{font-size:1.6rem;width:48px;height:48px;border-radius:13px;background:var(--panel);display:grid;place-items:center}
+.svc:hover .ic{background:#fff}
+.svc .nm{font-size:1.4rem;font-weight:700}
+.svc .ds{font-size:.86rem;color:var(--soft);margin-top:.1rem}
+.svc .ar{font-family:'JetBrains Mono',monospace;color:var(--soft);transition:color .3s,transform .3s}
+.svc:hover .ar{color:var(--green-deep);transform:translateX(4px)}
+
+.cta-band{background:#0a0a0b;color:#fff;text-align:center;border-radius:30px;margin:0 auto;position:relative;overflow:hidden}
+.cta-band::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(22,196,106,.3),transparent 70%);bottom:-180px;right:-90px}
+.cta-inner{padding:clamp(3rem,7vw,5.5rem) var(--pad);position:relative}
+.cta-band h2{font-size:clamp(2.2rem,5vw,3.8rem);max-width:16ch;margin:1.1rem auto 1.2rem;color:#fff}
+.cta-band h2 .hl{display:inline-block;background:linear-gradient(135deg,var(--green-2),var(--green));color:#053018;padding:.02em .24em .12em;border-radius:12px;transform:rotate(-1.4deg)}
+.cta-band p{color:var(--on-dark);max-width:42ch;margin:0 auto 2.2rem}
+.cta-band .eyebrow{color:var(--on-dark);justify-content:center}.cta-band .eyebrow::before{background:var(--green)}
+.cta-band .info{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:2.4rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--on-dark)}
+
+footer{padding:2.4rem 0;border-top:1px solid var(--line);margin-top:4rem}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:var(--soft)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr}.pass{max-width:400px;margin:0 auto}}
+@media(max-width:560px){.stats{grid-template-columns:1fr;border:none}.stat{border-right:none;border-top:1px solid var(--line)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}.rp{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<header id="h">
+  <div class="wrap nav">
+    <a href="#top" class="brand"><span class="m">M</span><div>Meridian &amp; Hart<small>Global Mobility</small></div></a>
+    <a href="#contact" class="btn btn-green">Free Consultation →</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Licensed UAE Consultancy · Est. 2012</span>
+      <h1>Your world,<br>without <span class="hl">borders</span>.</h1>
+      <p>We turn the complexity of global immigration into one calm, guided journey.</p>
+      <div class="cta">
+        <a href="#contact" class="btn btn-green">Book a free consultation →</a>
+        <a href="#services" class="btn btn-ghost">View services</a>
+      </div>
+    </div>
+    <div class="pass">
+      <div class="h"><span>Boarding Pass · <b>Global Mobility</b></span><span>SEQ 001</span></div>
+      <div class="route">
+        <div class="node"><div class="c">DXB</div><div class="t">Dubai</div></div>
+        <div class="arc"><svg viewBox="0 0 200 54" preserveAspectRatio="none"><path class="rp" d="M2,48 Q100,-22 198,48"/><circle cx="2" cy="48" r="3.5" fill="#2ee082"/><circle cx="198" cy="48" r="3.5" fill="#2ee082"/><path fill="#2ee082" transform="translate(96,6) rotate(45)" d="M10 0 L13 7 L20 9 L13 11 L10 20 L7 11 L0 9 L7 7 Z"/></svg></div>
+        <div class="node"><div class="c">YOU</div><div class="t">Anywhere</div></div>
+      </div>
+      <div class="rows">
+        <div class="rl">Active Pathways</div>
+        <div class="row"><span>🇦🇪</span><span class="d">UAE · Golden Visa</span><span class="s ok">Approved</span></div>
+        <div class="row"><span>🇨🇦</span><span class="d">Canada · Express Entry</span><span class="s rv">In review</span></div>
+        <div class="row"><span>🇵🇹</span><span class="d">Portugal · Golden Residence</span><span class="s fi">Filing</span></div>
+      </div>
+      <div class="pf"><span>GATE · ADVISORY</span><span class="bc" id="bc"></span><span>★ 4.9 / 5</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" style="padding-top:0;padding-bottom:0"><div class="stats reveal">
+  <div class="stat"><div class="n" data-to="12000" data-suf="+">0</div><div class="l">Visas secured</div></div>
+  <div class="stat"><div class="n" data-to="98" data-suf="%">0</div><div class="l">Approval rate</div></div>
+  <div class="stat"><div class="n" data-to="60" data-suf="+">0</div><div class="l">Countries served</div></div>
+</div></div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">What we do</span>
+      <h2>Six ways across the border.</h2>
+    </div>
+    <div class="reveal">
+      <div class="svc"><span class="ic">🏛️</span><div><div class="nm">Golden &amp; Investor Visas</div><div class="ds">10-year UAE residency &amp; global investor pathways.</div></div><span class="ar">→</span></div>
+      <div class="svc"><span class="ic">💼</span><div><div class="nm">Skilled Work &amp; Talent</div><div class="ds">Points-tested and sponsored routes worldwide.</div></div><span class="ar">→</span></div>
+      <div class="svc"><span class="ic">🎓</span><div><div class="nm">Study Abroad</div><div class="ds">University placement &amp; student visas.</div></div><span class="ar">→</span></div>
+      <div class="svc"><span class="ic">🛂</span><div><div class="nm">Citizenship by Investment</div><div class="ds">Second passports through vetted programmes.</div></div><span class="ar">→</span></div>
+      <div class="svc"><span class="ic">👨‍👩‍👧</span><div><div class="nm">Family Sponsorship</div><div class="ds">Reunite spouses, children and parents.</div></div><span class="ar">→</span></div>
+      <div class="svc"><span class="ic">🌐</span><div><div class="nm">Business Setup &amp; Relocation</div><div class="ds">Company formation &amp; corporate residence.</div></div><span class="ar">→</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band" id="contact">
+      <div class="cta-inner">
+        <span class="eyebrow">Get started</span>
+        <h2>Let's chart your <span class="hl">route</span>.</h2>
+        <p>Book a free, honest consultation with a dedicated advisor — and we'll map the fastest realistic path to your new life abroad.</p>
+        <a href="#" class="btn btn-green" onclick="this.textContent='Request received ✓';return false">Book my free consultation →</a>
+        <div class="info"><span>📍 Downtown Dubai, UAE</span><span>📞 +971 4 000 0000</span><span>✉️ advisors@meridianhart.ae</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Meridian &amp; Hart Global Mobility · Dubai, UAE</span>
+    <span class="mono" style="font-size:.7rem">DESIGN PREVIEW · SAMPLE</span>
+  </div>
+</footer>
+
+<script>
+const h=document.getElementById('h');addEventListener('scroll',()=>h.classList.toggle('on',scrollY>16));
+const bc=document.getElementById('bc');if(bc){let s='';for(let i=0;i<26;i++)s+='<i style="height:'+(7+((i*7)%14))+'px"></i>';bc.innerHTML=s;}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const cio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){count(x.target);cio.unobserve(x.target)}}),{threshold:.6});
+document.querySelectorAll('.stat .n').forEach(el=>cio.observe(el));
+function count(el){const to=+el.dataset.to,sf=el.dataset.suf||'',t0=performance.now();(function f(t){const p=Math.min((t-t0)/1400,1),e=1-Math.pow(1-p,3);el.textContent=Math.floor(e*to).toLocaleString()+sf;if(p<1)requestAnimationFrame(f)})(t0)}
+</script>
+</body>
+</html>
