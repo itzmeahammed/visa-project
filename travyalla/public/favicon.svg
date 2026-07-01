@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="ts" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#f6d784"/>
+      <stop offset=".55" stop-color="#d3a437"/>
+      <stop offset="1" stop-color="#a9791a"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="#0c0d0c"/>
+  <!-- luggage grip -->
+  <path d="M12.4 15 V13.6 a2 2 0 0 1 2 -2 H17.6 a2 2 0 0 1 2 2 V15" fill="none" stroke="#dfb046" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- case body -->
+  <path d="M9 15 H21 a2.4 2.4 0 0 1 2.4 2.4 V23.4 a2.4 2.4 0 0 1 -2.4 2.4 H9 a2.4 2.4 0 0 1 -2.4 -2.4 V17.4 A2.4 2.4 0 0 1 9 15 Z" fill="url(#ts)"/>
+  <!-- lid seam -->
+  <path d="M7 18.6 H23.4" stroke="#6b4d10" stroke-width="1" stroke-opacity=".5" stroke-linecap="round"/>
+  <!-- plane lifting off the top-right corner -->
+  <path d="M27.6 6 L19 9.5 L22.4 11 Z" fill="#ffe9b0"/>
+  <path d="M27.6 6 L22.4 11 L23.5 13.3 Z" fill="#c7982c"/>
+</svg>
