@@ -5,6 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+/** Live handle to the Lenis instance so route changes can reset scroll through it. */
+export const lenisRef: { current: Lenis | null } = { current: null }
+
 /**
  * Wires Lenis smooth-scroll into GSAP's ticker so ScrollTrigger and Lenis
  * share one render loop. Returns nothing — mount once at the app root.
@@ -20,6 +23,7 @@ export function useLenis() {
       smoothWheel: true,
     })
 
+    lenisRef.current = lenis
     lenis.on('scroll', ScrollTrigger.update)
 
     const tick = (time: number) => lenis.raf(time * 1000)
@@ -28,6 +32,7 @@ export function useLenis() {
 
     return () => {
       gsap.ticker.remove(tick)
+      lenisRef.current = null
       lenis.destroy()
     }
   }, [])

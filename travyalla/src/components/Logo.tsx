@@ -1,9 +1,10 @@
 import React from 'react'
 
 /**
- * TRAVSOUK logo — a custom vector gold travel coin emblem featuring a high-end
- * concierge agent avatar. Next to it sits the svelte wordmark (TRAV in small
- * uppercase charcoal, SOUK in larger bold gold).
+ * TRAVSOUK logo — an ink seal ringed in fine gold. Inside, a pointed souk
+ * archway (the gateway) with a gold paper plane ascending through it and a
+ * dotted flight trail. Beside it, the TRAVSOUK wordmark with a letterspaced
+ * concierge subline.
  */
 export default function Logo({
   className = '',
@@ -13,77 +14,70 @@ export default function Logo({
   wordmark?: boolean
 }) {
   return (
-    <span className={`flex items-center gap-2 group cursor-pointer select-none ${className}`}>
-      {/* Gold Coin circular badge */}
-      <span className="relative grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-[#fff3cf] via-[#dfb046] to-[#a9791a] shadow-[0_3px_10px_rgba(199,152,44,0.15)] border border-white/30 transition-all duration-300 group-hover:scale-102 group-hover:shadow-[0_5px_15px_rgba(199,152,44,0.22)]">
-        {/* Soft gold glow */}
-        <span className="absolute -right-2 -top-2 h-6 w-6 rounded-full bg-white/25 blur-sm" />
-
-        <svg viewBox="0 0 32 32" className="relative h-6.5 w-6.5 transition-transform duration-500 ease-out group-hover:scale-[1.04]" aria-hidden="true">
+    <span className={`flex items-center gap-2.5 group cursor-pointer select-none ${className}`}>
+      {/* Ink seal with gold ring */}
+      <span className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-b from-[#23201b] to-[#0d0d0e] shadow-[0_4px_14px_rgba(15,15,16,0.28)] ring-1 ring-[#c7982c]/60 transition-all duration-300 group-hover:shadow-[0_6px_18px_rgba(199,152,44,0.35)] group-hover:ring-[#dfb046]">
+        <svg viewBox="0 0 48 48" className="relative h-10 w-10 transition-transform duration-500 ease-out group-hover:scale-[1.05]" aria-hidden="true">
           <defs>
-            {/* Rich gradients */}
-            <linearGradient id="ts-jacket" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1c1a17" />
-              <stop offset="100%" stopColor="#0d0d0e" />
-            </linearGradient>
-            <linearGradient id="ts-skin" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffdcb8" />
-              <stop offset="100%" stopColor="#f5bd8c" />
-            </linearGradient>
-            <linearGradient id="ts-gold-details" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="ts-gold" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#fdf3d0" />
-              <stop offset="100%" stopColor="#d5a83c" />
+              <stop offset="45%" stopColor="#dfb046" />
+              <stop offset="100%" stopColor="#a9791a" />
+            </linearGradient>
+            <linearGradient id="ts-gold-soft" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#f4dfa0" />
+              <stop offset="100%" stopColor="#c7982c" />
             </linearGradient>
           </defs>
 
-          {/* Inner gold frame border */}
-          <circle cx="16" cy="16" r="14.5" fill="none" stroke="#fff3cf" strokeWidth="0.65" strokeOpacity="0.45" />
+          {/* Fine inner ring */}
+          <circle cx="24" cy="24" r="20" fill="none" stroke="url(#ts-gold)" strokeWidth="1" strokeOpacity="0.9" />
+          <circle cx="24" cy="24" r="17.6" fill="none" stroke="#fdf3d0" strokeWidth="0.4" strokeOpacity="0.35" />
 
-          {/* Concierge Agent Suit Jacket */}
+          {/* Souk archway — pointed Arabian arch */}
           <path
-            d="M5.5 32 C 5.5 25.2, 26.5 25.2, 26.5 32 Z"
-            fill="url(#ts-jacket)"
+            d="M15 36 L15 24 C15 17.5 18.5 13.6 24 11 C29.5 13.6 33 17.5 33 24 L33 36"
+            fill="none"
+            stroke="url(#ts-gold-soft)"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+          />
+          {/* Arch threshold */}
+          <line x1="12.5" y1="36" x2="35.5" y2="36" stroke="url(#ts-gold-soft)" strokeWidth="1.4" strokeLinecap="round" />
+
+          {/* Dotted flight trail sweeping up through the arch */}
+          <path
+            d="M16.5 32.5 C 19 27.5, 22 24.5, 27.5 21.5"
+            fill="none"
+            stroke="#fdf3d0"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeDasharray="0.2 2.6"
+            strokeOpacity="0.85"
           />
 
-          {/* Shirt collar (white V-shape) */}
-          <path d="M12.5 25 L16 32 L19.5 25 Z" fill="#ffffff" />
-          
-          {/* Gold Tie */}
-          <path d="M15.5 27 L16.5 27 L16 32 Z" fill="url(#ts-gold-details)" />
+          {/* Paper plane ascending through the arch */}
+          <g transform="translate(24.2 12.4) rotate(38) scale(0.44)">
+            <path
+              d="M14.5 21.7a.5.5 0 0 0 .94-.02l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.02.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"
+              fill="url(#ts-gold)"
+            />
+          </g>
 
-          {/* Skin (Face) */}
-          <circle cx="16" cy="16.5" r="5.2" fill="url(#ts-skin)" />
-
-          {/* Neat Hair cut */}
-          <path
-            d="M10.8 16.5 C 10.8 11.2, 21.2 11.2, 21.2 16.5 C 21.2 15.2, 19.8 13.8, 16 13.8 C 12.2 13.8, 10.8 15.2, 10.8 16.5"
-            fill="#1c1a17"
-          />
-
-          {/* Neat Beard */}
-          <path
-            d="M10.8 16.5 C 10.8 22.8, 21.2 22.8, 21.2 16.5 L19.8 16.5 C 19.8 20.8, 12.2 20.8, 12.2 16.5 Z"
-            fill="#1c1a17"
-          />
-
-          {/* Gold Spectacles */}
-          <rect x="11.4" y="14.8" width="3.4" height="2.4" rx="0.6" fill="none" stroke="url(#ts-gold-details)" strokeWidth="0.8" />
-          <rect x="17.2" y="14.8" width="3.4" height="2.4" rx="0.6" fill="none" stroke="url(#ts-gold-details)" strokeWidth="0.8" />
-          <line x1="14.8" y1="15.8" x2="17.2" y2="15.8" stroke="url(#ts-gold-details)" strokeWidth="0.8" />
-          <line x1="10.8" y1="15.8" x2="11.4" y2="15.8" stroke="url(#ts-gold-details)" strokeWidth="0.65" />
-          <line x1="20.6" y1="15.8" x2="21.2" y2="15.8" stroke="url(#ts-gold-details)" strokeWidth="0.65" />
+          {/* Guiding star */}
+          <path d="M33.6 13.2 l0.7 1.7 1.7 0.7 -1.7 0.7 -0.7 1.7 -0.7 -1.7 -1.7 -0.7 1.7 -0.7 Z" fill="#fdf3d0" opacity="0.9" />
         </svg>
-
-        {/* Live dot with active pulse glow */}
-        <span className="absolute bottom-0.5 right-0.5 flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-status opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-status ring-1 ring-white"></span>
-        </span>
       </span>
+
       {wordmark && (
-        <span className="flex items-baseline select-none">
-          <span className="text-[9px] font-bold text-ink/50 uppercase tracking-[0.2em] mr-1.5">TRAV</span>
-          <span className="text-[1.12rem] font-black text-green uppercase tracking-[0.04em] transition-colors duration-300 group-hover:text-green-light">SOUK</span>
+        <span className="flex flex-col justify-center leading-none select-none">
+          <span className="flex items-baseline text-[1.18rem] font-black -tracking-[0.02em]">
+            <span className="text-ink">TRAV</span>
+            <span className="text-green transition-colors duration-300 group-hover:text-green-light">SOUK</span>
+          </span>
+          <span className="mt-[3px] text-[6.5px] font-bold uppercase tracking-[0.32em] text-ink/45">
+            Visa &amp; Travel Concierge
+          </span>
         </span>
       )}
     </span>

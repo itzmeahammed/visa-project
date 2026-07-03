@@ -104,6 +104,117 @@ body {
   animation: spin-counter-clockwise 50s linear infinite;
 }
 
+/* ---------- Hero choreography ---------- */
+
+/* Staggered rise-in for hero content */
+@keyframes hero-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-rise {
+  opacity: 0;
+  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+/* Visa stamp slams in: oversized + rotated, settles onto the ticket */
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(2.2) rotate(4deg);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-11deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-13deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-12deg);
+  }
+}
+.stamp-in {
+  opacity: 0;
+  animation: stamp-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 1.15s;
+}
+
+/* Flight path draws itself across the hero */
+@keyframes dash-travel {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.flight-path {
+  stroke-dasharray: 6 8;
+  stroke-dashoffset: 700;
+  animation: dash-travel 3.2s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+/* Slow gold shimmer sweeping across the headline accent word */
+@keyframes gold-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.gold-shimmer {
+  background-image: linear-gradient(100deg, #8f6a1c 20%, #dfb046 40%, #f4dfa0 50%, #dfb046 60%, #8f6a1c 80%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 6s ease-in-out infinite;
+}
+
+/* Gentle float for ambient hero elements */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-shimmer {
+    animation: none;
+  }
+  .hero-rise,
+  .stamp-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .stamp-in {
+    transform: rotate(-12deg);
+  }
+  .flight-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .float-soft {
+    animation: none;
+  }
+}
+
 /* Responsive translation radius for the rotating client ring */
 .avatar-ring-item {
   --radius: 120px;

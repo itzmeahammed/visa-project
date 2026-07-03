@@ -16,6 +16,7 @@ import SchengenVisa from './pages/SchengenVisa'
 import CorporateVisa from './pages/CorporateVisa'
 import UkVisa from './pages/UkVisa'
 import UsVisa from './pages/UsVisa'
+import Eligibility from './pages/Eligibility'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Careers from './pages/Careers'
@@ -60,6 +61,7 @@ export default function App() {
             <Route path="/news" element={<Articles kind="news" />} />
             <Route path="/news/:slug" element={<Post kind="news" />} />
 
+            <Route path="/eligibility" element={<Eligibility />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/careers" element={<Careers />} />

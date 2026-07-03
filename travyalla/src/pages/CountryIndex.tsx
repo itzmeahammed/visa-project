@@ -10,20 +10,36 @@ const ease = [0.16, 1, 0.3, 1] as const
 type Filter = 'All' | (typeof regions)[number]
 const filters: Filter[] = ['All', ...regions]
 
+/** Serve card-sized images: the grid renders ~400px wide, so 640/q55 is plenty. */
+function cardSizedUrl(url: string) {
+  return url.replace(/w=\d+/, 'w=640').replace(/q=\d+/, 'q=55')
+}
+
 function CountryCard({ country }: { country: Country }) {
   const images = getCountryImages(country)
-  const coverImage = images[0]
+  const coverImage = cardSizedUrl(images[0])
+  const [loaded, setLoaded] = useState(false)
 
   return (
     <Link
       to={`/country/${country.slug}`}
       className="group relative flex h-[280px] flex-col justify-end overflow-hidden rounded-[24px] border border-white/10 bg-ink p-6 shadow-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:border-[#c7982c]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2"
     >
-      {/* Background Image with slow zoom transition */}
-      <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out group-hover:scale-108"
-        style={{ backgroundImage: `url(${coverImage})` }}
+      {/* Lazy-loaded cover with slow zoom + fade-in */}
+      <img
+        src={coverImage}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        className={`absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-1000 ease-out group-hover:scale-108 ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        }`}
       />
+      {/* Shimmer placeholder while the image streams in */}
+      {!loaded && (
+        <div className="absolute inset-0 bg-gradient-to-br from-[#23201b] via-[#161411] to-[#0d0d0e] animate-pulse" aria-hidden="true" />
+      )}
 
       {/* Luxury Vignette and Gradients */}
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/65 to-transparent" />

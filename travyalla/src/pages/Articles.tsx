@@ -11,20 +11,7 @@ const ease = [0.16, 1, 0.3, 1] as const
 // would miss — leaving freshly-filtered cards stuck invisible).
 const MotionLink = motion(Link)
 
-// A small palette of soft gradients so each card gets a distinct, image-free
-// cover. Picked deterministically from the post index.
-const covers = [
-  'from-[#e0a82e]/25 via-white to-[#f4c430]/15',
-  'from-[#a9791a]/20 via-white to-[#ffd966]/20',
-  'from-[#ffd966]/30 via-white to-[#e0a82e]/10',
-  'from-[#0a0a0a]/10 via-white to-[#e0a82e]/20',
-  'from-[#f4c430]/20 via-white to-[#a9791a]/15',
-]
-
-function readingTime(post: Post) {
-  const words = post.body.join(' ').split(/\s+/).length
-  return Math.max(2, Math.round(words / 180))
-}
+import { coverFor, readingTime } from '../lib/postCovers'
 
 export default function Articles({ kind }: { kind: 'blog' | 'news' }) {
   const posts = kind === 'blog' ? blogPosts : newsPosts
@@ -76,19 +63,18 @@ export default function Articles({ kind }: { kind: 'blog' | 'news' }) {
               to={`/${kind}/${featured.slug}`}
               className="group grid overflow-hidden rounded-3xl border border-cloud bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2 focus-visible:ring-offset-paper md:grid-cols-2"
             >
-              <div
-                className={`relative min-h-[220px] bg-gradient-to-br ${covers[0]} p-8 md:min-h-[360px]`}
-              >
-                <span className="inline-flex items-center gap-2 rounded-pill bg-ink px-3.5 py-1.5 text-xs font-semibold text-white">
+              <div className="relative min-h-[240px] overflow-hidden p-8 md:min-h-[380px]">
+                <img
+                  src={coverFor(featured, 0).replace('w=900', 'w=1400')}
+                  alt=""
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/15 to-transparent" aria-hidden="true" />
+                <span className="relative inline-flex items-center gap-2 rounded-pill bg-ink/80 backdrop-blur px-3.5 py-1.5 text-xs font-semibold text-white">
                   <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-green-light" />
                   {kind === 'blog' ? 'Featured guide' : 'Top story'}
                 </span>
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -bottom-10 -right-6 select-none text-[7rem] leading-none opacity-25"
-                >
-                  {kind === 'blog' ? '📘' : '🗞️'}
-                </div>
               </div>
               <div className="flex flex-col justify-center p-8 md:p-12">
                 <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-green-deep">
@@ -163,20 +149,18 @@ export default function Articles({ kind }: { kind: 'blog' | 'news' }) {
                   transition={{ duration: 0.5, ease, delay: Math.min(i, 5) * 0.05 }}
                   className="group flex flex-col overflow-hidden rounded-3xl border border-cloud bg-white transition hover:-translate-y-1 hover:border-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
                 >
-                  <div
-                    className={`relative flex h-40 items-end bg-gradient-to-br p-5 ${
-                      covers[(i + 1) % covers.length]
-                    }`}
-                  >
-                    <span className="rounded-pill bg-white/80 px-3 py-1 text-xs font-semibold text-ink backdrop-blur">
+                  <div className="relative flex h-44 items-end overflow-hidden p-5">
+                    <img
+                      src={coverFor(post, i + 1)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-108"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/10 to-transparent" aria-hidden="true" />
+                    <span className="relative rounded-pill bg-white/85 px-3 py-1 text-xs font-semibold text-ink backdrop-blur">
                       {post.tag}
                     </span>
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -bottom-6 -right-2 select-none text-[5rem] leading-none opacity-20"
-                    >
-                      {kind === 'blog' ? '✈️' : '📌'}
-                    </div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-semibold leading-snug tracking-[-0.01em]">

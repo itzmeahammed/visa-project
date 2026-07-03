@@ -5,7 +5,6 @@ import BetterWay from '../components/BetterWay'
 import FAQ from '../components/FAQ'
 import { CtaBand } from '../components/Footer'
 import {
-  Media,
   Features,
   TrackRecord,
   Premium,
@@ -20,7 +19,6 @@ export default function Home() {
   return (
     <Page>
       <Hero />
-      <Media />
       <BetterWay />
       <TravelRingSection />
       <Destinations />

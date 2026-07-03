@@ -1,11 +1,14 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { getService } from '../data/services'
 import { PageHeader, CtaBand, Page } from '../components/PageShell'
 import NotFound from './NotFound'
 
-export default function ServicePage() {
-  const { slug } = useParams()
-  const s = getService(slug || '')
+export default function ServicePage({ slug: slugProp }: { slug?: string }) {
+  const { slug: slugParam } = useParams()
+  const { pathname } = useLocation()
+  // Static routes like /tourist-visas carry no :slug param — fall back to the path itself.
+  const slug = slugProp || slugParam || pathname.replace(/^\/|\/$/g, '')
+  const s = getService(slug)
   if (!s) return <NotFound />
 
   return (

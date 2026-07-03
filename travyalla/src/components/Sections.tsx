@@ -42,42 +42,171 @@ export function Media() {
 
 
 export function Features() {
-  const ref = useReveal<HTMLDivElement>()
+  const wrapRef = useRef<HTMLDivElement>(null)
+
+  // As each next card arrives, the covered card gently scales back and dims.
+  useEffect(() => {
+    const wrap = wrapRef.current
+    if (!wrap) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return
+
+    const cards = gsap.utils.toArray<HTMLElement>('.feature-card', wrap)
+    // Covered cards stay fully opaque (no text bleed-through) — they simply
+    // recede: scale down and dim via brightness while the next card slides over.
+    const tweens = cards.slice(0, -1).map((card, i) =>
+      gsap.to(card.querySelector('article'), {
+        scale: 0.95,
+        filter: 'brightness(0.62)',
+        transformOrigin: 'center top',
+        ease: 'none',
+        scrollTrigger: {
+          // Only recede while the next card is physically sliding over this one:
+          // from the moment its top crosses ~2/3 of the viewport until it docks.
+          trigger: cards[i + 1],
+          start: 'top 68%',
+          end: 'top top+=120',
+          scrub: true,
+        },
+      })
+    )
+    return () => {
+      tweens.forEach((t) => {
+        t.scrollTrigger?.kill()
+        t.kill()
+      })
+    }
+  }, [])
+
+  // One evocative destination image per pillar
+  const cardImages = [
+    'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=60',
+    'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1600&q=60',
+    'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1600&q=60',
+    'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1600&q=60',
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=60',
+    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=60',
+  ]
+
   return (
-    <section id="why" className="py-14 bg-[#f0f0f0] relative overflow-hidden">
-      <div ref={ref} className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
+    <section id="why" className="relative bg-paper py-24 overflow-clip">
+      {/* Ambient gold atmosphere */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute top-0 left-[15%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(199,152,44,0.1),transparent_65%)]" />
+        <div className="absolute bottom-0 right-[8%] h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle,rgba(199,152,44,0.08),transparent_65%)]" />
+      </div>
+
+      <div className="relative max-w-5xl mx-auto px-5 md:px-8">
+        {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="reveal inline-block px-4 py-1 text-xs font-semibold uppercase tracking-wider bg-white rounded-full text-black shadow-sm mb-3">
+          <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.28em] text-green-deep">
+            <span className="h-px w-6 bg-green/50" aria-hidden="true" />
             All Inclusive Visa Service
+            <span className="h-px w-6 bg-green/50" aria-hidden="true" />
           </span>
-          <h2 className="reveal text-3xl sm:text-4xl md:text-6xl font-semibold tracking-tight text-gray-900 leading-tight">
-            What sets us apart from <br />
-            other visa services <span className="italic font-serif font-semibold text-black">Dubai, UAE</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold -tracking-[0.02em] text-ink leading-[1.08]">
+            What sets us apart from
+            <br />
+            other visa services <span className="accent text-green-deep">Dubai, UAE</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((f) => (
+        {/* Sticky stacking deck */}
+        <div ref={wrapRef} className="relative">
+          {features.map((f, i) => (
             <div
               key={f.title}
-              className="reveal bg-white rounded-3xl p-8 shadow-sm border border-black/5 hover:shadow-md transition-all group hover:-translate-y-1"
+              className="feature-card sticky mb-6 will-change-transform"
+              style={{ top: `${80 + i * 14}px`, zIndex: i + 1 }}
             >
-              <span
-                aria-hidden="true"
-                className="grid h-12 w-12 place-items-center rounded-2xl bg-[#f0f0f0] text-2xl text-green transition-transform duration-300 group-hover:scale-110"
-              >
-                {f.icon}
-              </span>
-              <h3 className="mt-5 text-xl font-bold text-black">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-500">{f.body}</p>
+              <article className="group relative overflow-hidden rounded-[30px] border border-white/10 text-white shadow-[0_30px_70px_-30px_rgba(15,15,16,0.5)] px-7 py-12 md:px-14 md:py-16 min-h-[400px] md:min-h-[460px] flex flex-col justify-end">
+                {/* Destination imagery */}
+                <img
+                  src={cardImages[i % cardImages.length]}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+                />
+                {/* Readability veil */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0d] via-[#0c0c0d]/72 to-[#0c0c0d]/25" aria-hidden="true" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(199,152,44,0.22),transparent_55%)]" aria-hidden="true" />
+
+                {/* Giant watermark number */}
+                <span
+                  aria-hidden="true"
+                  className="accent absolute right-4 -top-6 md:right-10 md:-top-8 text-[9rem] md:text-[12rem] leading-none select-none pointer-events-none text-white/10"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                <div className="relative grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-end">
+                  <span
+                    aria-hidden="true"
+                    className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border border-green-light/40 bg-ink/40 backdrop-blur-md text-3xl text-green-light shadow-lg"
+                  >
+                    {f.icon}
+                  </span>
+                  <div>
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-[11px] font-mono font-bold tracking-[0.3em] text-green-light uppercase">
+                        0{i + 1}
+                      </span>
+                      <h3 className="text-2xl md:text-4xl font-extrabold -tracking-[0.02em] drop-shadow-sm">{f.title}</h3>
+                    </div>
+                    <p className="mt-4 text-[15px] md:text-lg leading-relaxed max-w-xl text-white/75">{f.body}</p>
+                    <div
+                      aria-hidden="true"
+                      className="mt-7 h-px w-full max-w-sm bg-gradient-to-r from-green-light/60 via-white/15 to-transparent"
+                    />
+                  </div>
+                </div>
+              </article>
             </div>
           ))}
+
+          {/* Final CTA card in the stack */}
+          <div
+            className="feature-card sticky will-change-transform"
+            style={{ top: `${88 + features.length * 14}px`, zIndex: features.length + 1 }}
+          >
+            <div className="relative overflow-hidden rounded-[30px] border border-green/30 bg-gradient-to-b from-[#2a2416] to-[#141109] text-white shadow-[0_30px_70px_-30px_rgba(199,152,44,0.5)] px-7 py-14 md:px-14 md:py-20 min-h-[340px] flex flex-col items-center justify-center text-center gap-0">
+              <div className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-green/20 blur-3xl" aria-hidden="true" />
+              <div className="pointer-events-none absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-green/10 blur-3xl" aria-hidden="true" />
+
+              <span className="relative inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-green-light/80">
+                <span className="h-px w-6 bg-green-light/40" aria-hidden="true" />
+                Your move
+                <span className="h-px w-6 bg-green-light/40" aria-hidden="true" />
+              </span>
+              <span className="relative mt-4 accent text-4xl md:text-6xl text-green-light leading-tight block">
+                Ready when you are.
+              </span>
+              <p className="relative mt-4 text-sm md:text-base text-white/60 leading-relaxed max-w-md mx-auto">
+                Check your eligibility in under a minute — and let the concierge handle the rest.
+              </p>
+              <Link
+                to="/eligibility"
+                className="relative group mt-8 inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-b from-green-light to-green px-11 py-[18px] md:px-12 md:py-5 text-base md:text-lg font-bold text-ink transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-12px_rgba(199,152,44,0.8)] ring-1 ring-white/20"
+              >
+                <span className="relative z-10 flex items-center gap-2.5">
+                  Check my eligibility
+                  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                </span>
+                <span className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-13deg)_translateX(100%)]" aria-hidden="true">
+                  <span className="relative h-full w-10 bg-white/40"></span>
+                </span>
+              </Link>
+              <span className="relative mt-5 text-[11px] font-semibold text-white/35">
+                Free · No documents needed · ~60 seconds
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   )
 }
-
 function Counter({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null)
   useEffect(() => {
@@ -217,47 +346,119 @@ export function Premium() {
 
 export function Reviews() {
   const ref = useReveal<HTMLDivElement>()
+  const [[index, direction], setIndex] = useState<[number, number]>([0, 0])
+  const [paused, setPaused] = useState(false)
+
+  const count = reviews.length
+  const go = (dir: number) => setIndex(([i]) => [(i + dir + count) % count, dir])
+
+  useEffect(() => {
+    if (paused) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return
+    const timer = setInterval(() => go(1), 5500)
+    return () => clearInterval(timer)
+  }, [paused, count])
+
+  const review = reviews[index]
+
+  const variants = {
+    enter: (dir: number) => ({ x: dir > 0 ? 90 : -90, opacity: 0, scale: 0.97 }),
+    center: { x: 0, opacity: 1, scale: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? -90 : 90, opacity: 0, scale: 0.97 }),
+  }
+
   return (
-    <section id="reviews" className="py-14 bg-[#f0f0f0] relative overflow-hidden">
-      <div ref={ref} className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-        <span className="reveal text-xs font-semibold uppercase tracking-wider text-green">
-          Reviews
-        </span>
-        <h2 className="reveal mt-3 text-3xl md:text-5xl font-bold leading-tight tracking-tight text-black">
-          Trusted by <span className="italic font-serif font-semibold">frequent travelers.</span>
-        </h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {reviews.map((r) => (
-            <figure
-              key={r.name}
-              className="reveal flex h-full flex-col rounded-3xl border border-black/5 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-green/20 hover:shadow-md"
-            >
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="#327800"
-                    stroke="#327800"
-                    className="w-3.5 h-3.5"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                ))}
-              </div>
-              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-gray-600 italic">
-                “{r.body}”
-              </blockquote>
-              <figcaption className="mt-5 border-t border-black/5 pt-4">
-                <div className="font-bold text-black">{r.name}</div>
-                <div className="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-0.5">
-                  {r.role}
+    <section id="reviews" className="py-20 bg-[#f0f0f0] relative overflow-hidden">
+      {/* Oversized watermark quote */}
+      <span aria-hidden="true" className="accent absolute -top-10 left-6 md:left-16 text-[16rem] leading-none text-green/[0.08] select-none pointer-events-none">
+        &ldquo;
+      </span>
+
+      <div ref={ref} className="max-w-5xl mx-auto px-4 md:px-8 relative">
+        <div className="text-center">
+          <span className="reveal inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.28em] text-green-deep">
+            <span className="h-px w-6 bg-green/50" />
+            Reviews
+            <span className="h-px w-6 bg-green/50" />
+          </span>
+          <h2 className="reveal mt-4 text-3xl md:text-5xl font-bold leading-tight -tracking-[0.02em] text-ink">
+            Trusted by <span className="accent font-normal text-green-deep">frequent travelers.</span>
+          </h2>
+        </div>
+
+        <div
+          className="reveal relative mt-12"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="relative overflow-hidden">
+            <AnimatePresence mode="wait" custom={direction} initial={false}>
+              <motion.figure
+                key={index}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="mx-auto max-w-3xl rounded-[32px] border border-cloud bg-white px-7 py-10 md:px-14 md:py-12 text-center shadow-[0_24px_60px_-30px_rgba(15,15,16,0.2)]"
+              >
+                <div className="flex items-center justify-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 fill-green text-green" viewBox="0 0 24 24" aria-hidden="true">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
                 </div>
-              </figcaption>
-            </figure>
+                <blockquote className="mt-6 text-xl md:text-[1.55rem] font-medium leading-snug text-ink/85">
+                  &ldquo;{review.body}&rdquo;
+                </blockquote>
+                <figcaption className="mt-8 flex items-center justify-center gap-3">
+                  <Avatar index={index + 4} className="h-11 w-11 rounded-full border-2 border-white shadow-md" />
+                  <div className="text-left">
+                    <div className="font-bold text-ink text-sm">{review.name}</div>
+                    <div className="text-[11px] text-muted font-semibold uppercase tracking-wider mt-0.5">
+                      {review.role}
+                    </div>
+                  </div>
+                </figcaption>
+              </motion.figure>
+            </AnimatePresence>
+          </div>
+
+          {/* Arrows */}
+          <button
+            onClick={() => go(-1)}
+            aria-label="Previous review"
+            className="absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full bg-white border border-cloud shadow-md text-ink hover:border-green/40 hover:text-green-deep hover:scale-105 transition-all duration-300"
+          >
+            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            onClick={() => go(1)}
+            aria-label="Next review"
+            className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full bg-white border border-cloud shadow-md text-ink hover:border-green/40 hover:text-green-deep hover:scale-105 transition-all duration-300"
+          >
+            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Dots */}
+        <div className="mt-8 flex items-center justify-center gap-2.5">
+          {reviews.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(([cur]) => [i, i > cur ? 1 : -1])}
+              aria-label={`Go to review ${i + 1}`}
+              className={`rounded-full transition-all duration-400 ${
+                i === index ? 'h-2 w-8 bg-green' : 'h-2 w-2 bg-ink/15 hover:bg-ink/30'
+              }`}
+            />
           ))}
         </div>
       </div>
@@ -436,14 +637,16 @@ export function TravelRingSection() {
   useEffect(() => {
     const updateRadius = () => {
       const w = window.innerWidth
-      if (w >= 1024) {
-        setRadius(300)
+      if (w >= 1280) {
+        setRadius(430)
+      } else if (w >= 1024) {
+        setRadius(380)
       } else if (w >= 768) {
-        setRadius(220)
+        setRadius(310)
       } else if (w >= 640) {
-        setRadius(160)
+        setRadius(240)
       } else {
-        setRadius(120)
+        setRadius(175)
       }
     }
     updateRadius()
@@ -461,7 +664,7 @@ export function TravelRingSection() {
   const isPaused = hoveredIdx !== null
 
   return (
-    <section className="jsx-4d30f23aae47e249 py-36 md:py-48 bg-[#fdfcfb] overflow-hidden relative min-h-[780px] flex items-center justify-center border-t border-black/5">
+    <section className="jsx-4d30f23aae47e249 py-32 md:py-44 bg-[#fdfcfb] overflow-hidden relative min-h-[600px] sm:min-h-[700px] md:min-h-[840px] lg:min-h-[960px] flex items-center justify-center border-t border-black/5">
       {/* Central luminous glow backdrop */}
       <div className="absolute w-[350px] h-[350px] bg-green/5 rounded-full blur-[80px] pointer-events-none z-0" />
 
@@ -482,6 +685,11 @@ export function TravelRingSection() {
       </div>
 
       <div className="container mx-auto px-5 relative flex flex-col items-center justify-center z-10 text-center max-w-2xl">
+        {/* Frosted halo keeps the heading readable above the orbiting ring */}
+        <div
+          aria-hidden="true"
+          className="absolute -inset-x-10 -inset-y-14 z-[-1] rounded-full bg-[radial-gradient(closest-side,rgba(253,252,251,0.98)_55%,rgba(253,252,251,0.75)_78%,transparent)]"
+        />
         <span className="reveal inline-block px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.25em] bg-[#fdf7eb] border border-[#c7982c]/25 rounded-full text-green mb-5">
           Live Concierge Feed
         </span>
@@ -544,12 +752,12 @@ export function TravelRingSection() {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         
         {/* Outer dashed orbit circle */}
-        <div className={`absolute w-[340px] h-[340px] sm:w-[440px] sm:h-[440px] md:w-[600px] md:h-[600px] lg:w-[820px] lg:h-[820px] rounded-full border border-dashed border-[#c7982c]/10 opacity-60 animate-spin-slow [animation-duration:120s] ${
+        <div className={`absolute w-[420px] h-[420px] sm:w-[560px] sm:h-[560px] md:w-[700px] md:h-[700px] lg:w-[880px] lg:h-[880px] xl:w-[980px] xl:h-[980px] rounded-full border border-dashed border-[#c7982c]/10 opacity-60 animate-spin-slow [animation-duration:120s] ${
           isPaused ? '[animation-play-state:paused]' : ''
         }`}></div>
 
         {/* Primary Orbit ring */}
-        <div className={`relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[500px] md:h-[500px] lg:w-[680px] lg:h-[680px] rounded-full border border-[#c7982c]/15 shadow-[0_0_45px_rgba(199,152,44,0.04)] animate-spin-slow flex items-center justify-center ${
+        <div className={`relative w-[350px] h-[350px] sm:w-[480px] sm:h-[480px] md:w-[620px] md:h-[620px] lg:w-[760px] lg:h-[760px] xl:w-[860px] xl:h-[860px] rounded-full border border-[#c7982c]/15 shadow-[0_0_45px_rgba(199,152,44,0.04)] animate-spin-slow flex items-center justify-center ${
           isPaused ? '[animation-play-state:paused]' : ''
         }`}>
           
@@ -564,7 +772,7 @@ export function TravelRingSection() {
                 style={{
                   transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`,
                 }}
-                className="absolute w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center pointer-events-auto cursor-pointer"
+                className="absolute w-10 h-10 sm:w-14 sm:h-14 md:w-[68px] md:h-[68px] lg:w-20 lg:h-20 flex items-center justify-center pointer-events-auto cursor-pointer"
               >
                 <div 
                   className="w-full h-full relative transition-transform duration-300 hover:scale-110 active:scale-95"
